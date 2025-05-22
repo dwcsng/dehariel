@@ -1,0 +1,80 @@
+<!-- filepath: main/templates/main/book_appointment.html -->
+{% extends 'main/base.html' %}
+{% block title %}Book Appointment{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4 text-center main-primary-text">Đặt lịch cắt tóc</h2>
+  <form method="post" class="p-4 rounded shadow-sm bg-white" style="max-width:700px;margin:auto;">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <!-- Chọn thợ cắt tóc -->
+    <div class="mb-4">
+      <label class="form-label fw-bold mb-3" style="font-size:1.1rem;">Chọn thợ cắt tóc <span class="text-danger">*</span></label>
+      <div class="row">
+        {% for barber in barbers %}
+        <div class="col-12 col-md-4 mb-3">
+          <input type="radio" name="barber" value="{{ barber.id }}" id="barber{{ barber.id }}"
+            class="btn-check"
+            {% if forloop.first %}required{% endif %}
+            {% if form.data.barber == barber.id|stringformat:"s" or request.GET.barber == barber.id|stringformat:"s" %}checked{% endif %}>
+          <label class="barber-card w-100 p-2 rounded border text-center" for="barber{{ barber.id }}">
+            <img src="{{ barber.photo.url }}" alt="{{ barber.name }}" style="width:80px;height:80px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+            <div class="fw-bold mt-2">{{ barber.name }}</div>
+            <div class="small">{{ barber.experience }}</div>
+            <div class="small">Lịch: {{ barber.schedule }}</div>
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+      {{ form.barber.errors }}
+    </div>
+
+    <!-- Chọn dịch vụ -->
+    <div class="mb-4">
+      <label for="id_service" class="form-label fw-bold mb-2">Dịch vụ <span class="text-danger">*</span></label>
+      <select name="service" id="id_service" class="form-select">
+        {% for service in services %}
+          <option value="{{ service.id }}"
+            {% if form.data.service == service.id|stringformat:"s" or request.GET.service == service.id|stringformat:"s" %}selected{% endif %}>
+            {{ service.name }} ({{ service.price|floatformat:0 }} USD)
+          </option>
+        {% endfor %}
+      </select>
+      {{ form.service.errors }}
+    </div>
+
+    <!-- Ngày & giờ -->
+    <div class="mb-4">
+      <label for="id_appointment_date" class="form-label fw-bold mb-2">Ngày & giờ <span class="text-danger">*</span></label>
+      {{ form.appointment_date }}
+      {{ form.appointment_date.errors }}
+    </div>
+
+    <!-- Ghi chú -->
+    <div class="mb-4">
+      <label for="id_notes" class="form-label fw-bold mb-2">Ghi chú</label>
+      {{ form.notes }}
+      {{ form.notes.errors }}
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary px-5 py-2 fs-5">Đặt lịch</button>
+    </div>
+  </form>
+</div>
+
+<style>
+  .barber-card {
+    border: 2px solid #eee;
+    background: #fafbfc;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .btn-check:checked + .barber-card,
+  .barber-card:hover {
+    border-color: #d63384 !important;
+    box-shadow: 0 4px 20px rgba(214,51,132,0.10);
+    background: #fff0fa;
+  }
+</style>
+{% endblock %}

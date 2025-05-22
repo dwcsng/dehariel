@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %} Du ký Barber {% endblock %}</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'main/style.css' %}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container">
+      <div class="d-flex align-items-center w-100 justify-content-between">
+        <div class="d-flex align-items-center">
+          <a class="navbar-brand" href="{% url 'home' %}" style="border:none; box-shadow:none;">
+            Du ký Barber
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61576335577676" target="_blank" class="ms-2" style="color:#1877f3;">
+            <i class="fab fa-facebook fa-lg"></i>
+          </a>
+        </div>
+        <form method="get" action="{% url 'home' %}" class="d-flex mx-auto" style="max-width:350px; width:100%;">
+          <input type="text" name="q" class="form-control me-2" placeholder="Tìm kiếm dịch vụ..." value="{{ request.GET.q }}">
+          <button type="submit" class="btn btn-primary">Tìm</button>
+        </form>
+        <button id="toggle-dark" class="btn btn-outline-secondary ms-3" type="button" title="Chuyển dark/light mode">
+          <i class="fa fa-moon"></i>
+        </button>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Trang chủ</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'book_appointment' %}">Đặt lịch</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'barbers' %}">Barbers</a></li>
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Chào mừng, {{ user.username }}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Đăng xuất</a></li>
+              </ul>
+            </li>
+          {% else %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Đăng nhập</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'signup' %}">Đăng kí</a></li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Hiệu ứng chuyển trang
+    document.body.style.opacity = 0;
+    window.addEventListener('DOMContentLoaded', function() {
+      document.body.style.transition = 'opacity 0.7s';
+      document.body.style.opacity = 1;
+    });
+
+    // Dark mode toggle
+    const btn = document.getElementById('toggle-dark');
+    const icon = btn.querySelector('i');
+    function setDarkMode(on) {
+      document.body.classList.toggle('dark-mode', on);
+      icon.className = on ? 'fa fa-sun' : 'fa fa-moon';
+      localStorage.setItem('darkMode', on ? '1' : '');
+    }
+    btn.onclick = () => setDarkMode(!document.body.classList.contains('dark-mode'));
+    if (localStorage.getItem('darkMode')) setDarkMode(true);
+  </script>
+</body>
+</html>

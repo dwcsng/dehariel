@@ -1,0 +1,24 @@
+<!-- filepath: main/templates/main/login.html -->
+{% extends 'main/base.html' %}
+{% block title %}Đăng nhập{% endblock %}
+{% block content %}
+<div class="container">
+  <h2>Đăng nhập</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="mb-3">
+      <label for="id_username" class="form-label">Tên người dùng</label>
+      {{ form.username }}
+      {{ form.username.errors }}
+    </div>
+    <div class="mb-3">
+      <label for="id_password" class="form-label">Mật khẩu</label>
+      {{ form.password }}
+      {{ form.password.errors }}
+    </div>
+    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+  </form>
+  <p>Không có tài khoản? <a href="{% url 'signup' %}">Đăng ký tại đây</a>.</p>
+</div>
+{% endblock %}

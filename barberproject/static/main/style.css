@@ -1,0 +1,164 @@
+:root {
+  --main-bg: #fff5f7;
+  --main-bg-gradient: linear-gradient(to right, #fff5f7, #ffe6e6);
+  --main-text: #222;
+  --main-card-bg: #fff;
+  --main-card-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  --main-primary: #d63384;
+  --main-secondary: #c41c6f;
+}
+
+body {
+  background: var(--main-bg-gradient);
+  color: var(--main-text);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.card, .barber-card, .service-card {
+  background: var(--main-card-bg);
+  box-shadow: var(--main-card-shadow);
+}
+
+h2, .navbar-brand, .nav-link.active {
+  color: var(--main-primary) !important;
+}
+
+.btn-primary {
+  background-color: var(--main-primary);
+  border-color: var(--main-primary);
+}
+
+.btn-primary:hover {
+  background-color: var(--main-secondary);
+  border-color: var(--main-secondary);
+}
+
+/* Dark mode */
+body.dark-mode {
+  --main-bg: #23272f;
+  --main-bg-gradient: linear-gradient(to right, #23272f, #343541);
+  --main-text: #f1f1f1;
+  --main-card-bg: #2d2f36;
+  --main-card-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  --main-primary: #ff6ec7;
+  --main-secondary: #d63384;
+}
+
+body.dark-mode {
+  background: var(--main-bg-gradient);
+  color: var(--main-text);
+}
+
+body.dark-mode .card,
+body.dark-mode .barber-card,
+body.dark-mode .service-card {
+  background: var(--main-card-bg);
+  box-shadow: var(--main-card-shadow);
+}
+
+body.dark-mode .navbar,
+body.dark-mode .navbar-brand,
+body.dark-mode .nav-link.active {
+  background: #23272f !important;
+  color: var(--main-primary) !important;
+}
+/* ...existing code... */
+
+body.dark-mode {
+  background: var(--main-bg-gradient);
+  color: var(--main-text);
+}
+
+/* Đảm bảo màu chữ cho các thẻ tiêu đề và văn bản chính */
+body.dark-mode,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6,
+body.dark-mode .text-dark,
+body.dark-mode .card-title,
+body.dark-mode .card-text,
+body.dark-mode .navbar-brand,
+body.dark-mode .nav-link,
+body.dark-mode label,
+body.dark-mode .form-label,
+body.dark-mode .fw-bold,
+body.dark-mode .lead,
+body.dark-mode .form-control,
+body.dark-mode .btn,
+body.dark-mode .dropdown-item,
+body.dark-mode .small,
+body.dark-mode .text-center,
+body.dark-mode .text-muted {
+  color: var(--main-text) !important;
+}
+
+/* Đảm bảo màu chữ cho card-footer, bảng, input, select */
+body.dark-mode .card-footer,
+body.dark-mode .table,
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+  background: var(--main-card-bg) !important;
+  color: var(--main-text) !important;
+  border-color: #444 !important;
+}
+
+/* Đổi màu placeholder input khi dark mode */
+body.dark-mode input::placeholder,
+body.dark-mode textarea::placeholder {
+  color: #aaa !important;
+  opacity: 1;
+}
+
+/* Đổi màu border cho các card khi dark mode */
+body.dark-mode .card,
+body.dark-mode .barber-card,
+body.dark-mode .service-card {
+  border-color: #444 !important;
+}
+
+/* Đổi màu link khi dark mode */
+body.dark-mode a,
+body.dark-mode .nav-link,
+body.dark-mode .navbar-brand {
+  color: var(--main-primary) !important;
+}
+
+/* Đổi màu nút khi dark mode */
+body.dark-mode .btn-primary {
+  background-color: var(--main-primary);
+  border-color: var(--main-primary);
+  color: #fff;
+}
+body.dark-mode .btn-primary:hover {
+  background-color: var(--main-secondary);
+  border-color: var(--main-secondary);
+}
+
+/* Đổi màu dropdown menu khi dark mode */
+body.dark-mode .dropdown-menu {
+  background: #23272f;
+  color: var(--main-text);
+}
+body.dark-mode .dropdown-item {
+  color: var(--main-text) !important;
+}
+.main-primary-text {
+  color: var(--main-primary) !important;
+}
+
+body.dark-mode .main-primary-text {
+  color: var(--main-primary) !important;
+}
+
+body.dark-mode .footer,
+body.dark-mode footer,
+body.dark-mode .contact-info,
+body.dark-mode .lead,
+body.dark-mode .card-body,
+body.dark-mode .text-center,
+body.dark-mode .fw-bold {
+  color: var(--main-text) !important;
+}

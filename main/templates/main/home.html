@@ -1,0 +1,60 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block title %}Home - Du ký barber {% endblock %}
+
+{% block content %}
+<!-- Banner giới thiệu -->
+<div class="p-4 mb-4 rounded-3" style="background: linear-gradient(90deg, #ffe6e6 60%, #fff5f7 100%); box-shadow: 0 4px 20px rgba(0,0,0,0.05);">
+  <div class="container py-3 text-center">
+    <h1 class="display-5 fw-bold main-primary-text">Chào mừng đến với Du ký Barber</h1>
+    <img src="{% static "C:\Users\Admin\Downloads\dehihihi-main\dehihihi-main\deha\barberproject\static\main\banner.jpg\kiki.jpg" %}" alt="Banner Du ký Barber" class="my-3" style="max-width: 350px; width: 100%; height: auto; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);">
+    <p class="lead mb-3">Trải nghiệm dịch vụ cắt tóc chuyên nghiệp, hiện đại và tận tâm.</p>
+    <a href="{% url 'book_appointment' %}" class="btn btn-primary btn-lg">Đặt lịch ngay</a>
+  </div>
+</div>
+
+<h2 class="mb-4 text-center">Dịch vụ nổi bật</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  {% for service in services %}
+  <div class="col">
+    <div class="card h-100 shadow-sm border-0 service-card" style="transition: transform 0.2s;">
+      {% if service.image %}
+      <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" style="height:220px;object-fit:cover;">
+      {% else %}
+      <img src="{% static 'main/default_service.jpg' %}" class="card-img-top" alt="No image" style="height:220px;object-fit:cover;">
+      {% endif %}
+      <div class="card-body text-center">
+        <h5 class="card-title">{{ service.name }}</h5>
+        <p class="card-text">{{ service.description|truncatechars:80 }}</p>
+      </div>
+      <div class="card-footer bg-white border-0 text-center">
+        <span class="fw-bold text-primary">Giá: {{ service.price|floatformat:0 }} USD</span>
+        <br>
+        <a href="{% url 'book_appointment' %}?service={{ service.id }}" class="btn btn-outline-primary btn-sm mt-2">Đặt lịch dịch vụ này</a>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>Không có dịch vụ nào hợp lệ tại thời điểm này.</p>
+  {% endfor %}
+</div>
+
+<!-- Thêm hiệu ứng hover cho card -->
+<style>
+  .service-card:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(214,51,132,0.15);
+  }
+</style>
+
+<!-- Thông tin quán -->
+<footer class="mt-5 py-4 bg-light rounded shadow-sm">
+  <div class="container text-center">
+    <h5 class="mb-3 main-primary-text">Thông tin liên hệ</h5>
+    <p class="mb-1"><strong>Địa chỉ:</strong> 21/90, Khuất Duy Tiến, Thanh Xuân, Hà Nội</p>
+    <p class="mb-1"><strong>Số điện thoại:</strong> <a href="tel:0944499986" class="main-primary-text">0944499986</a></p>
+    <p class="mb-1"><strong>Website:</strong> <a href="http://127.0.0.1:8000/" target="_blank" class="main-primary-text">127.0.0.1:8000.vn</a></p>
+    <p class="text-muted small mb-0">&copy; Du ký Barber. All rights reserved.</p>
+  </div>
+</footer>
+{% endblock %}

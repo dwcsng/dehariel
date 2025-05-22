@@ -1,0 +1,72 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Lịch cắt của tôi</h2>
+  <!-- Form lọc lịch hẹn -->
+<form method="get" class="row g-3 mb-4">
+  <div class="col-md-3">
+    <select name="barber" class="form-select">
+      <option value="">-- Thợ cắt tóc --</option>
+      {% for barber in barbers %}
+        <option value="{{ barber.id }}" {% if barber.id|stringformat:"s" == selected_barber %}selected{% endif %}>{{ barber.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <select name="service" class="form-select">
+      <option value="">-- Dịch vụ --</option>
+      {% for service in services %}
+        <option value="{{ service.id }}" {% if service.id|stringformat:"s" == selected_service %}selected{% endif %}>{{ service.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-3">
+    <input type="date" name="date" class="form-control" value="{{ selected_date }}">
+  </div>
+  <div class="col-md-3">
+    <button type="submit" class="btn btn-primary w-100">Lọc</button>
+  </div>
+</form>
+  {% if appointments %}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Dịch vụ</th>
+      <th>Thợ cắt tóc</th>
+      <th>Ngày & Giờ</th>
+      <th>Cái giá phải trả</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for app in appointments %}
+    <tr>
+      <td>{{ app.service.name }}</td>
+      <td>
+        {% if app.barber %}
+          {{ app.barber.name }}
+        {% else %}
+          <span class="text-danger">Chưa chọn</span>
+        {% endif %}
+      </td>
+      <td>{{ app.appointment_date|date:"d/m/Y H:i" }}</td>
+      <td>{{ app.service.price|floatformat:0 }} USD</td>
+      <td>{{ app.notes }}</td>
+      <td>
+        <form action="{% url 'delete_appointment' app.pk %}" method="post" style="display:inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger btn-sm">Hủy</button>
+        </form>
+        <a href="{% url 'edit_appointment' app.pk %}" class="btn btn-warning btn-sm">Chỉnh sửa</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+  {% else %}
+    <p>No appointments yet.</p>
+  {% endif %}
+  <a href="{% url 'home' %}" class="btn btn-secondary mt-3">Quay về trang chủ</a>
+</div>
+{% endblock %}
